@@ -13,3 +13,23 @@ exports.createGenre = (req, res, next) => {
             res.status(400).json({ error });
         });
 };
+
+exports.getGenres = (req, res, next) => {
+    Genre.find()
+        .then((genres) => {
+            res.status(201).json(genres);
+        })
+        .catch((error) => {
+            res.status(400).json({ error });
+        });
+};
+
+exports.findGenre = (req, res, next) => {
+    Genre.findOne({ _id: req.params.id })
+        .then((genre) => {
+            res.status(201).json(genre);
+        })
+        .catch((error) => {
+            res.status(400).json({ error });
+        });
+};
