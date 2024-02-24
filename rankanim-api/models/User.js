@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
     username: { type: String, required: true },
     animes: [
         {
-            anime: { type: Schema.Types.ObjectId, ref: 'Anime' },
+            anime: { type: mongoose.Schema.Types.ObjectId, ref: 'Anime' },
             rating: { type: Number, min: 0, max: 10 },
         },
     ],

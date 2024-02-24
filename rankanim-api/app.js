@@ -1,19 +1,26 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 
 const genreRoute = require('./routes/genre.js');
 const animeRoute = require('./routes/anime.js');
+const userRoute = require('./routes/user.js');
 
 const app = express();
 
 const appVersion = '1.0.0';
 
 // MongoDB connexion
+const dbUser = process.env.DB_USER;
+const dbPass = process.env.DB_PASS;
 mongoose
-    .connect('mongodb+srv://exostars:ayase@exostarscluster.ysrkpqs.mongodb.net/?retryWrites=true&w=majority', {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    })
+    .connect(
+        'mongodb+srv://' + dbUser + ':' + dbPass + '@exostarscluster.ysrkpqs.mongodb.net/?retryWrites=true&w=majority',
+        {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        },
+    )
     .then(() => console.log('Connexion à MongoDB réussie !'))
     .catch(() => console.log('Connexion à MongoDB échouée !'));
 
@@ -42,5 +49,6 @@ app.get('/api/version', (req, res) => {
 // Routes
 app.use('/api/genre', genreRoute);
 app.use('/api/anime', animeRoute);
+app.use('/api/user', userRoute);
 
 module.exports = app;
