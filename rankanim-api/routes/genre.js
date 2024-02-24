@@ -9,13 +9,13 @@ router.post('/', genreController.createGenre);
 // Get all genres
 router.get('/', genreController.getGenres);
 
-// Find a genre
+// Find genre
 router.get('/:id', genreController.findGenre);
 
-// Create genre
+// Update genre
 router.put('/:id', genreController.updateGenre);
 
-// Create genre
+// Delete genre
 router.delete('/:id', genreController.deleteGenre);
 
 module.exports = router;

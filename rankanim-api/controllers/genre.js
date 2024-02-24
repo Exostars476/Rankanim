@@ -17,7 +17,7 @@ exports.createGenre = (req, res, next) => {
 exports.getGenres = (req, res, next) => {
     Genre.find()
         .then((genres) => {
-            res.status(201).json(genres);
+            res.status(200).json(genres);
         })
         .catch((error) => {
             res.status(400).json({ error });
@@ -27,10 +27,10 @@ exports.getGenres = (req, res, next) => {
 exports.findGenre = (req, res, next) => {
     Genre.findOne({ _id: req.params.id })
         .then((genre) => {
-            res.status(201).json(genre);
+            res.status(200).json(genre);
         })
         .catch((error) => {
-            res.status(400).json({ error });
+            res.status(404).json({ error });
         });
 };
 
@@ -40,16 +40,16 @@ exports.updateGenre = (req, res, next) => {
             res.status(201).json({ message: 'Genre modifié avec succès !' });
         })
         .catch((error) => {
-            res.status(400).json({ error });
+            res.status(404).json({ error });
         });
 };
 
 exports.deleteGenre = (req, res, next) => {
     Genre.deleteOne({ _id: req.params.id })
         .then(() => {
-            res.status(201).json({ message: 'Genre supprimé avec succès !' });
+            res.status(200).json({ message: 'Genre supprimé avec succès !' });
         })
         .catch((error) => {
-            res.status(400).json({ error });
+            res.status(404).json({ error });
         });
 };
