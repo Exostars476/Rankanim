@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
+const genreRoute = require('./routes/genre.js');
+
 const app = express();
 
 const appVersion = '1.0.0';
@@ -13,10 +15,6 @@ mongoose
     })
     .then(() => console.log('Connexion à MongoDB réussie !'))
     .catch(() => console.log('Connexion à MongoDB échouée !'));
-
-app.get('/api/version', (req, res) => {
-    res.json({ version: appVersion });
-});
 
 // Access config
 app.use((req, res, next) => {
@@ -32,5 +30,15 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
 });
+
+// JSON PARSER
+app.use(express.json());
+
+app.get('/api/version', (req, res) => {
+    res.json({ version: appVersion });
+});
+
+// Routes
+app.use('/api/genre', genreRoute);
 
 module.exports = app;
