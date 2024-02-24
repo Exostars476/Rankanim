@@ -58,11 +58,11 @@ exports.getUsers = (req, res, next) => {
         .catch((error) => res.status(500).json({ error }));
 };
 
-// Find user
-exports.findUser = (req, res, next) => {};
-
-// Update user
-exports.updateUser = (req, res, next) => {};
-
 // Delete user
-exports.deleteUser = (req, res, next) => {};
+exports.deleteUser = (req, res, next) => {
+    User.deleteOne({ _id: req.params.id })
+        .then(() => {
+            res.status(200).json({ message: 'Utilisateur supprimé avec succès !' });
+        })
+        .catch((error) => res.status(500).json({ error }));
+};
