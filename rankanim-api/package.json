@@ -1,0 +1,11 @@
+{
+  "name": "rankanim-api",
+  "version": "1.0.0",
+  "description": "anime ranking rest api",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Exostars476",
+  "license": "ISC"
+}
