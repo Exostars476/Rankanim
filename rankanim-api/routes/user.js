@@ -16,7 +16,10 @@ router.get('/', userController.getUsers);
 // Delete user
 router.delete('/:id', userController.deleteUser);
 
-// Add anime to connected user
+// Add anime to the connected user
 router.post('/anime/add', auth, userController.addAnimeToUser);
+
+// Get anime of the connected user
+router.get('/anime', auth, userController.getUserAnimes);
 
 module.exports = router;

@@ -93,3 +93,19 @@ exports.addAnimeToUser = (req, res, next) => {
             res.status(500).json({ error });
         });
 };
+
+// Get anime of the connected user
+exports.getUserAnimes = (req, res, next) => {
+    const userId = req.auth.userId;
+
+    User.findById(userId)
+        .populate('animes.anime', 'name rating')
+        .select('animes')
+        .then((user) => {
+            if (!user) {
+                return res.status(404).json({ message: 'Utilisateur introuvable' });
+            }
+            res.status(200).json(user.animes);
+        })
+        .catch((error) => res.status(500).json({ error }));
+};
