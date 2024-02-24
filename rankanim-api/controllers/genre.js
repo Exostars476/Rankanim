@@ -33,3 +33,23 @@ exports.findGenre = (req, res, next) => {
             res.status(400).json({ error });
         });
 };
+
+exports.updateGenre = (req, res, next) => {
+    Genre.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
+        .then(() => {
+            res.status(201).json({ message: 'Genre modifié avec succès !' });
+        })
+        .catch((error) => {
+            res.status(400).json({ error });
+        });
+};
+
+exports.deleteGenre = (req, res, next) => {
+    Genre.deleteOne({ _id: req.params.id })
+        .then(() => {
+            res.status(201).json({ message: 'Genre supprimé avec succès !' });
+        })
+        .catch((error) => {
+            res.status(400).json({ error });
+        });
+};
