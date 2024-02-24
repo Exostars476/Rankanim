@@ -2,8 +2,6 @@ const Anime = require('../models/Anime');
 
 // Create anime
 exports.createAnime = (req, res, next) => {
-    console.log('Création anime');
-    console.log(req.body);
     delete req.body._id;
     const anime = new Anime({ ...req.body });
 
@@ -17,10 +15,33 @@ exports.createAnime = (req, res, next) => {
         });
 };
 
+// Create many animes
+exports.createManyAnimes = (req, res, next) => {
+    console.log('Debut create many');
+    Anime.insertMany(req.body)
+        .then((result) => {
+            res.status(201).json({ message: `${result.length} Animes créés avec succès !` });
+        })
+        .catch((error) => {
+            res.status(500).json({ error });
+        });
+};
+
 // Get all animes
 exports.getAnimes = (req, res, next) => {
     Anime.find()
         .populate('genres', 'name')
+        .then((animes) => {
+            res.status(200).json(animes);
+        })
+        .catch((error) => {
+            res.status(404).json({ error });
+        });
+};
+
+// Get all animes
+exports.getAnimesQuickList = (req, res, next) => {
+    Anime.find({}, 'name')
         .then((animes) => {
             res.status(200).json(animes);
         })
