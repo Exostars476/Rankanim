@@ -22,4 +22,7 @@ router.post('/anime/add', auth, userController.addAnimeToUser);
 // Get anime of the connected user
 router.get('/anime', auth, userController.getUserAnimes);
 
+// Update an anime rating of the connected user
+router.put('/anime/update', auth, userController.updateAnimeRating);
+
 module.exports = router;

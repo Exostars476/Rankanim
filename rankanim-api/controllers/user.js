@@ -109,3 +109,28 @@ exports.getUserAnimes = (req, res, next) => {
         })
         .catch((error) => res.status(500).json({ error }));
 };
+
+// Update an anime rating of the connected user
+exports.updateAnimeRating = (req, res, next) => {
+    const userId = req.auth.userId;
+    const { animeId, newRating } = req.body;
+
+    // Verify new rating between 0 and 10
+    if (newRating < 0 || newRating > 10) {
+        return res.status(400).json({ message: 'La note doit être entre 0 et 10.' });
+    }
+
+    // Find user and update it with new anime rating
+    User.findOneAndUpdate(
+        { _id: userId, 'animes.anime': animeId }, // Critère de recherche
+        { $set: { 'animes.$.rating': newRating } },
+        { new: true },
+    )
+        .then((user) => {
+            if (!user) {
+                return res.status(404).json({ message: 'Utilisateur introuvable.' });
+            }
+            res.status(200).json({ message: 'Note mise à jour avec succès', animes: user.animes });
+        })
+        .catch((error) => res.status(500).json({ error }));
+};
