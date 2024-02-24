@@ -1,6 +1,8 @@
+require('dotenv').config();
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const jwtSecret = process.env.JWT_SECRET;
 
 // Create user
 exports.createUser = (req, res, next) => {
@@ -17,6 +19,34 @@ exports.createUser = (req, res, next) => {
                 .catch((error) => res.status(400).json({ error }));
         })
         .catch((error) => res.status(500).json({ error }));
+};
+
+exports.login = async (req, res, next) => {
+    const { email, password } = req.body;
+
+    try {
+        // User exist ?
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(401).json({ message: 'Combinaison identifiant/mot de passe incorrecte !' });
+        }
+
+        // Password verification
+        const validPass = await bcrypt.compare(password, user.password);
+        if (!validPass) {
+            return res.status(401).json({ message: 'Combinaison identifiant/mot de passe incorrecte !' });
+        }
+
+        // Create and send JWT Token
+        const token = jwt.sign({ userId: user._id }, jwtSecret, { expiresIn: '24h' });
+
+        res.status(200).json({
+            userId: user._id,
+            token: token,
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 };
 
 // Get all users
