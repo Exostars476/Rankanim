@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const genreRoute = require('./routes/genre.js');
+const animeRoute = require('./routes/anime.js');
 
 const app = express();
 
@@ -40,5 +41,6 @@ app.get('/api/version', (req, res) => {
 
 // Routes
 app.use('/api/genre', genreRoute);
+app.use('/api/anime', animeRoute);
 
 module.exports = app;
