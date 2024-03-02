@@ -8,6 +8,7 @@ const animeSchema = new mongoose.Schema({
     last_broadcast_date: { type: Date },
     animation_studio: [{ type: String }],
     genres: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Genre' }],
+    thumbnail: { type: String },
 });
 
 module.exports = mongoose.model('Anime', animeSchema);
