@@ -2,16 +2,25 @@ import React, { useEffect, useState } from 'react'
 import { Loader } from '../../utils/style/Atoms'
 import AnimeCard from '../../components/AnimeCard'
 import Container from 'react-bootstrap/Container'
-import Button from 'react-bootstrap/Button'
+import Row from 'react-bootstrap/Row'
+import Form from 'react-bootstrap/Form'
 import Pagination from 'react-bootstrap/Pagination'
 import styled from 'styled-components'
 
-const PagingContainer = styled(Container)`
-    text-align: right;
+const PagingRow = styled(Row)`
+    justify-content: end;
 `
 
-const PagingButton = styled(Button)`
-    margin: 0 5px;
+const PagingContainer = styled(Pagination)`
+    width: max-content;
+    float: right;
+    margin-bottom: 0;
+`
+
+const NbAnimeSelect = styled(Form.Select)`
+    width: auto;
+    align-self: center;
+    margin-right: 15px;
 `
 
 function Home() {
@@ -20,7 +29,7 @@ function Home() {
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState(false)
     const [animeListIndex, setAnimeListIndex] = useState(0)
-    const [nbAnimesDisplayed, setNbAnimeDisplayed] = useState(9)
+    const [nbAnimesDisplayed, setNbAnimeDisplayed] = useState(10)
     const [currentPage, setCurrentPage] = useState(0)
 
     useEffect(() => {
@@ -133,15 +142,28 @@ function Home() {
                     {currentPageAnimeList.map((anime) => (
                         <AnimeCard key={anime._id} name={anime.name} genres={anime.genres}></AnimeCard>
                     ))}
-                    <PagingContainer>
-                        <Pagination>
-                            <Pagination.First onClick={handleFirst} disabled={currentPage === 0} />
-                            <Pagination.Prev onClick={handlePrevious} disabled={currentPage === 0} />
-                            {renderPageNumbers()}
-                            <Pagination.Next onClick={handleNext} disabled={currentPage + 1 >= totalPages} />
-                            <Pagination.Last onClick={handleLast} disabled={currentPage + 1 === totalPages} />
-                        </Pagination>
-                    </PagingContainer>
+                    <Container>
+                        <PagingRow>
+                            <NbAnimeSelect
+                                size="sm"
+                                aria-label="Number of anime displayed"
+                                onChange={(e) => {
+                                    setNbAnimeDisplayed(e.target.value)
+                                }}
+                            >
+                                <option>{nbAnimesDisplayed}</option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                            </NbAnimeSelect>
+                            <PagingContainer>
+                                <Pagination.First onClick={handleFirst} disabled={currentPage === 0} />
+                                <Pagination.Prev onClick={handlePrevious} disabled={currentPage === 0} />
+                                {renderPageNumbers()}
+                                <Pagination.Next onClick={handleNext} disabled={currentPage + 1 >= totalPages} />
+                                <Pagination.Last onClick={handleLast} disabled={currentPage + 1 === totalPages} />
+                            </PagingContainer>
+                        </PagingRow>
+                    </Container>
                 </Container>
             )}
         </div>
