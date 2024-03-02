@@ -26,7 +26,12 @@ mongoose
 
 // Access config
 app.use((req, res, next) => {
-    const allowedOrigins = ['http://127.0.0.1:4200', 'http://127.0.0.1:3000'];
+    const allowedOrigins = [
+        'http://localhost:3000',
+        'http://127.0.0.1:3000',
+        'http://127.0.0.1:3001',
+        'http://localhost:3001',
+    ];
     const origin = req.headers.origin;
     if (allowedOrigins.includes(origin)) {
         res.setHeader('Access-Control-Allow-Origin', origin);
