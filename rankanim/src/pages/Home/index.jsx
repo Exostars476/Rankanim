@@ -7,6 +7,11 @@ import Form from 'react-bootstrap/Form'
 import Pagination from 'react-bootstrap/Pagination'
 import styled from 'styled-components'
 
+const AnimeListContainer = styled(Container)`
+    width: 700px;
+    height: 50%;
+`
+
 const PagingRow = styled(Row)`
     justify-content: end;
 `
@@ -138,9 +143,9 @@ function Home() {
                     <Loader />
                 </div>
             ) : (
-                <Container>
+                <AnimeListContainer>
                     {currentPageAnimeList.map((anime) => (
-                        <AnimeCard key={anime._id} name={anime.name} genres={anime.genres}></AnimeCard>
+                        <AnimeCard key={anime._id} name={anime.name} genres={anime.genres} thumbnail={anime.thumbnail}></AnimeCard>
                     ))}
                     <Container>
                         <PagingRow>
@@ -164,7 +169,7 @@ function Home() {
                             </PagingContainer>
                         </PagingRow>
                     </Container>
-                </Container>
+                </AnimeListContainer>
             )}
         </div>
     )

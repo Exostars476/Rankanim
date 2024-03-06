@@ -6,4 +6,20 @@ const colors = {
     backgroundLight: '#F9F9FC',
 }
 
-export default colors
+const genreColors = {
+    action: '#FF5555',
+    adventure: '#FFB973',
+    drama: '#000000',
+    comedy: '#FFFF99',
+    fantasy: '#C49AC7',
+    horror: '#8B0000',
+    mystery: '#555555',
+    romance: ' #FFC0CB',
+    sciFi: '#8FFFFF',
+    sliceOfLife: '#87CEEB',
+    sport: '#008000',
+    supernatural: '#9370DB',
+    unknown: '#FFFFFF',
+}
+
+export default { colors, genreColors }
